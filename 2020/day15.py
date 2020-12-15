@@ -1,12 +1,9 @@
 spoken = [6, 4, 12, 1, 20, 0, 16]
-i = len(spoken)
 def next_number(x, d, th):
-    global i
     lsrev = list(reversed(spoken))
-
-    i += 1
+    i = len(spoken)+1
     if i == th:
-        print('%s the %sth number spoken\ndepth is: %s' %(x, i, d))
+        print('%s the %sth number spoken\ndepth is: %s' % (x, i, d))
         return x
     elif x in spoken:        
         if x == spoken[-1]:
