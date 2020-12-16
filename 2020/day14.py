@@ -1,5 +1,5 @@
 
-ifile = 'day14input.txt'
+# ifile = 'day14input.txt'
 # ifile = 'day14inputexample.txt'
 ifile = 'day14inputexample2.txt'
 instructions = list(open(ifile, "r").read().split('\n'))
@@ -9,11 +9,38 @@ mask = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 memory= {}
 memory_version_two = {}
 
-# def maskvariations(variation):
-#     b = [0, 1]
-#     for x in variation:
-    
+variations = {}
+def maskvariations(i, v, mask):
+    variation = []
+    mask_range = list(range(i, len(mask)))
 
+    if i == max(mask_range):
+        return '0'
+    if len(variation) > 0 and variation[-1] == v:
+        return v
+        
+    for ci in mask_range:
+        if mask[ci] == 'X': 
+            v = ''
+            if v == '1':
+                variation.append(maskvariations(i+1, '0', mask))
+            else:
+                variation.append(maskvariations(i+1, '1', mask))
+            # print('ci: %s i: %s, mask[i]: %s' %(ci, i, mask[i]))
+        else:
+            variation.append(mask[ci])
+            i += 1
+    else:
+        # variation.remove(True)
+        # print(variation)
+        bvar = ''.join(variation)
+        print('bvar: ' + bvar)
+        variations[int(bvar, 2)] = bvar
+        return maskvariations(i, '', mask)
+
+
+print('results: %s' %(maskvariations(0, '', '00000000000000000000000000000000X0XX')))
+print(memory_version_two)
 def maskupdate(madr, mask, patch):
     i = 0
     base = []
