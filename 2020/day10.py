@@ -24,7 +24,7 @@ while i < len(adapters):
     elif difference == 3:
         three_jolts += 1
     else:
-        incompatible_adapters[adpt] = difference
+        incompatible_adapters[adapters[i]] = difference
     i += 1
     
 print('''
@@ -51,8 +51,8 @@ target_jolt = sum(adapter_jolt_differences)
 # recursive or dynamic function that stores the number of possible combinations if each adapter applied as opposed to counting each full combination.
 # the full-range 
 #
-#####################                
-
+#####################  
+#               
 combinations = {}                                       #0 initiate the dictionary for number of possibilities
 def variations(i):                                      #1
     remaining_range = range(i+1, len(adapters))         #2  create a range for the remaining possible adapters (adapters is created in answer one)
