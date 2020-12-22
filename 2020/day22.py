@@ -1,4 +1,4 @@
-decks = open('day22input.txt', 'r').readlines()
+decks = open('day22inputsample.txt', 'r').readlines()
 p = 0
 player_one_deck = []
 player_two_deck = []
@@ -6,11 +6,12 @@ for card in decks:
     c = card.replace('\n', '')
     if c.isdigit():
         if p == 1:
-            player_two_deck.append(int(c))
-        else:
             player_one_deck.append(int(c))
+        else:
+            player_two_deck.append(int(c))
     else:
         p += 1
+
 
 def score(winner_deck):
     points = 0
@@ -23,61 +24,100 @@ def score(winner_deck):
         i += 1
     return points
 
-def play_round(deck_a, deck_b):
+def play_round(player_one, player_two):
     i = 0
-    while min(len(deck_a), len(deck_b)) > 0:
-        # print('Round: %s \ndeck a: %s\ndeck b: %s' %(i+1,  deck_a, deck_b))
-        da = deck_a.pop(0)
-        db = deck_b.pop(0)
+    while min(len(player_one), len(player_two)) > 0:
+        # print('Round: %s \ndeck a: %s\ndeck b: %s' %(i+1,  player_one, player_two))
+        da = player_one.pop(0)
+        db = player_two.pop(0)
         # print('a: %s vs b: %s' %(da, db))
         if da > db:
-            deck_a.append(da)
-            deck_a.append(db)
-            if len(deck_b) == 0 :
+            player_one.append(da)
+            player_one.append(db)
+            if len(player_two) == 0 :
                 # print('deck a is winner!')
-                winning_deck = deck_a
-                # print(score(deck_a))
+                winning_deck = player_one
+                # print(score(player_one))
         else: 
-            deck_b.append(db)
-            deck_b.append(da)
-            if len(deck_a) == 0:
+            player_two.append(db)
+            player_two.append(da)
+            if len(player_one) == 0:
                 # print('deck b is winner!')
-                winning_deck = deck_b
-                # print(score(deck_b))
-        # print('results\ndeck a: %s deck b: %s\n----' %(deck_a, deck_b))
+                winning_deck = player_two
+                # print(score(player_two))
+        # print('results\ndeck a: %s deck b: %s\n----' %(player_one, player_two))
         i += 1
     
     return winning_deck
 
 player_one_deck_series = []
 player_two_deck_series = []
-def play_recursive_combat(deck_a, deck_b):
-    i = 0
-    if deck_a in player_one_deck_series or deck_b in player_two_deck_series:
-        print('Recurse rule! player 1 wins!')
-        winning_deck = deck_a
-    while min(len(deck_a), len(deck_b)) > 0:
-        da = deck_a.pop(0)
-        db = deck_b.pop(0)
-        if db > len(deck_b) and da > len(deck_a):
-            winning_deck = play_recursive_combat(deck_a, deck_b)
+def play_recursive_combat(player_one, player_two, g):
+    i = 1
+    print('\n\n === Game %s ===\n' %(g))
+    global player_one_deck_series
+    global player_two_deck_series
+    if player_one in player_one_deck_series or player_two in player_two_deck_series:
+        # print('round: %s \nRecurse rule! player 1 wins! \na: %s\n%s = %s\n--\nb: %s\n%s = %s\n---' %
+        #     (i, player_one, player_one_deck_series, (player_one in player_one_deck_series), player_two, player_two_deck_series, (player_two in player_two_deck_series)))
+        return 'a', player_one
+    else: 
+        player_one_deck_series.append(list(player_one))
+        player_two_deck_series.append(list(player_two))
+    while min(len(player_one), len(player_two)) > 0:
+        print('''
+-- Round %s (Game %s) --
+Player 1\'s deck: %s
+Player 2\'s deck: %s''' % (i, g, player_one, player_two))
+        da = player_one.pop(0)
+        db = player_two.pop(0)
+        print('''Player 1 plays: %s
+Player 2 plays: %s
+        ''' %(da, db))
+        if db <= len(player_two) and da <= len(player_one):
+            print('Playing a sub-game to determine the winner...')
+            # print('i is %s when calling self with args: %s, %s, %s' %(i,list(player_one[:da]), list(player_two[:db]), g+1))
+            recurse_game = play_recursive_combat(list(player_one[:da]), list(player_two[:db]), int(g))
+            winner = recurse_game[0]
+            print('\n...anyway, back to game %s.' %(g))
+            if winner == 'a':
+                print('Player 1 wins round %s of game %s!' % (i, g))
+                player_one.append(da)
+                player_one.append(db)
+                if len(player_two) == 0:
+                    winner = 'a'
+                    winning_deck = player_one
+            else:
+                # print('winner of recurse game is: %s' % (recurse_game[0]))
+                print('Player 2 wins round %s of game %s!' % (i, g))
+                player_two.append(db)
+                player_two.append(da)
+                if len(player_one) == 0:
+                    winner = 'b'
+                    winning_deck = player_two
+
         elif da > db:
-            deck_a.append(da)
-            deck_a.append(db)
-            if len(deck_b) == 0:
-                print('deck a is winner!')
-                winning_deck = deck_a
+            print('Player 1 wins round %s of game %s!' %(i, g))
+            player_one.append(da)
+            player_one.append(db)
+            if len(player_two) == 0:
+                winner = 'a'
+                winning_deck = player_one
         else:
-            deck_b.append(db)
-            deck_b.append(da)
-            if len(deck_a) == 0:
-                print('deck b is winner!')
-                winning_deck = deck_b
+            # print('deck b is winner! %s<%s' % (da, db))
+            print('Player 2 wins round %s of game %s!' %(i, g))
+            player_two.append(db)
+            player_two.append(da)
+            if len(player_one) == 0:
+                winner = 'b'
+                winning_deck = player_two
         i += 1
 
-    return winning_deck
+    return winner, winning_deck
 
 
-print(score(play_round(player_one_deck, player_two_deck)))
+print(score(play_round(list(player_one_deck), list(player_two_deck))))
+print('\n-----part two-----\n')
+print(score(play_recursive_combat(list(player_one_deck), list(player_two_deck), int(1))[1]))
 
-play_recursive_combat(player_one_deck, player_two_deck)
+# print(player_one_deck)
