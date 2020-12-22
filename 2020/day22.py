@@ -54,7 +54,7 @@ player_one_deck_series = []
 player_two_deck_series = []
 def play_recursive_combat(player_one, player_two, g):
     i = 1
-    print('\n\n === Game %s ===\n' %(g))
+    print('\n\n=== Game %s ===\n' %(g))
     global player_one_deck_series
     global player_two_deck_series
     if player_one in player_one_deck_series or player_two in player_two_deck_series:
@@ -68,33 +68,35 @@ def play_recursive_combat(player_one, player_two, g):
         print('''
 -- Round %s (Game %s) --
 Player 1\'s deck: %s
-Player 2\'s deck: %s''' % (i, g, player_one, player_two))
+Player 2\'s deck: %s''' % (i, g, ', '.join(str(x) for x in player_one), ', '.join(str(x) for x in player_two)))
         da = player_one.pop(0)
         db = player_two.pop(0)
         print('''Player 1 plays: %s
-Player 2 plays: %s
-        ''' %(da, db))
+Player 2 plays: %s''' %(da, db))
         if db <= len(player_two) and da <= len(player_one):
+            # g += 1
             print('Playing a sub-game to determine the winner...')
             # print('i is %s when calling self with args: %s, %s, %s' %(i,list(player_one[:da]), list(player_two[:db]), g+1))
-            recurse_game = play_recursive_combat(list(player_one[:da]), list(player_two[:db]), int(g))
+            recurse_game = play_recursive_combat(list(player_one[:da]), list(player_two[:db]), g+1)
             winner = recurse_game[0]
             print('\n...anyway, back to game %s.' %(g))
             if winner == 'a':
-                print('Player 1 wins round %s of game %s!' % (i, g))
+                print('Player 1 wins round %s of game %s!' %(i, g))
                 player_one.append(da)
                 player_one.append(db)
                 if len(player_two) == 0:
                     winner = 'a'
                     winning_deck = player_one
+                    print('The winner of game %s is player 1!' % (g))
             else:
-                # print('winner of recurse game is: %s' % (recurse_game[0]))
                 print('Player 2 wins round %s of game %s!' % (i, g))
                 player_two.append(db)
                 player_two.append(da)
                 if len(player_one) == 0:
                     winner = 'b'
                     winning_deck = player_two
+                    print('The winner of game %s is player 2!' %(g))
+            
 
         elif da > db:
             print('Player 1 wins round %s of game %s!' %(i, g))
@@ -103,14 +105,15 @@ Player 2 plays: %s
             if len(player_two) == 0:
                 winner = 'a'
                 winning_deck = player_one
+                print('The winner of game %s is player 1!' % (g))
         else:
-            # print('deck b is winner! %s<%s' % (da, db))
             print('Player 2 wins round %s of game %s!' %(i, g))
             player_two.append(db)
             player_two.append(da)
             if len(player_one) == 0:
                 winner = 'b'
                 winning_deck = player_two
+                print('The winner of game %s is player 2!' % (g))
         i += 1
 
     return winner, winning_deck
