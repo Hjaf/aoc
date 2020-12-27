@@ -16,22 +16,22 @@ def calculate(quiz, d):
     while i < len(quiz):
         if quiz[i].isdigit():
             ans = int(quiz[i])
-            print('digit: %s' %(ans))
+            # print('digit: %s' %(ans))
         elif quiz[i] == '*':
             # print('multiply with %s' %(quiz[i+1:]))
-            ans = ans * int(calculate(quiz[i+1:], d+1))
+            ans = ans * calculate(quiz[i+1:], d+1)
         elif quiz[i] == '+':
             # print('addition with %s' % (quiz[i+1:]))
             ans = ans + calculate(quiz[i+1:], d+1)
         elif quiz[i] == '(':
             pi = i + quiz[i:].index(')')
             # print('calculate: %s from index %s to index %s' %(quiz[i+1:pi+1], i+1, pi+1))
-            ans = calculate(quiz[i+1:pi+1], d+1)
-            i = pi-1
+            #i = pi-1
+            return ans + calculate(quiz[i+1:pi+1], d+1)
         # else: 
         #     return ans
         i += 1
-    print('returning: %s from quiz: %s\ndepth: %s\n-----\n\n-----' %(ans, quiz, d))
+    # print('returning: %s from quiz: %s\ndepth: %s\n-----\n\n-----' %(ans, quiz, d))
     return ans
 
 
