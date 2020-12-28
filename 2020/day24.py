@@ -16,13 +16,13 @@ coordinate = '0;0'
 path[coordinate] = {walk_no, step_no, ''}
 tile[coordinate] = True
 for walk in tilewalks:
-    print(walk)
+    # print(walk)
     steps = []
     step_no = 0
     x = 0
     y = 0
     while step_no < len(walk):
-        print('---\nstep: %s' %(step_no))
+        # print('---\nstep: %s' %(step_no))
         step = walk[step_no]
         if step == 'e':
             x += 4
@@ -45,26 +45,24 @@ for walk in tilewalks:
             x += 2
             y += 3
         coordinate = str(x)+';'+str(y)
-        print('step: %s, to coordinate: %s' %(step, coordinate))
+        # print('step: %s, to coordinate: %s' %(step, coordinate))
         path[coordinate] = [walk_no, step_no, step]
         step_no += 1
     else:
         # register the tile and flip it if it exists.
-        print('path final coordinate: %s' %(coordinate))
+        # print('path final coordinate: %s' %(coordinate))
         if coordinate in tile:
-            print('tile %s, %s is flipped! is white: %s' %
-                  (x, y, tile[coordinate]))
+            # print('tile %s, %s is flipped! is white: %s' %
+            #       (x, y, tile[coordinate]))
             tile[coordinate] = not(tile[coordinate])
         else:
             tile[coordinate] = False
     walk_no +=1
-# print(path)
-print(tile)
 white_count = 0
 black_count = 0
-# print(tile)
+
 for t in tile.values():
-    print(t)
+    # print(t)
     if t:
         white_count += 1
     else:
