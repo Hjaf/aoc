@@ -1,10 +1,11 @@
 tickets = open('day5input.txt', 'r').readlines()
+ticket_ids = {}
 
 def highest_ticket_id(tickets):
     max_seat_id = 0
     for ticket in tickets:
-        ticket_rows = list(range(0, 127))
-        ticket_seats = list(range(0, 7))
+        ticket_rows = list(range(128))
+        ticket_seats = list(range(8))
         fields = list(ticket.strip())
         for field in fields:
             rmid = int(len(ticket_rows)/2) + int(len(ticket_rows)%2) # round int up, should be 128 rows.
@@ -15,7 +16,6 @@ def highest_ticket_id(tickets):
                 ticket_rows = ticket_rows[rmid:]
             else: 
                 ticket_row = ticket_rows[0]
-            
             if field == 'L':
                 ticket_seats = ticket_seats[:smid]
             elif field == 'R':
@@ -23,7 +23,9 @@ def highest_ticket_id(tickets):
             if len(ticket_seats) == 1: # trigger on last iteration after range has been reduced.
                 ticket_seat = ticket_seats[0]
         ticket_seat_id = ticket_row * 8 + ticket_seat
+        ticket_ids[ticket_seat_id] = ticket.strip()
         max_seat_id = max(max_seat_id, ticket_seat_id)
     return max_seat_id
+
 # part one
 print('Part one answer: %s' %(highest_ticket_id(tickets)))
