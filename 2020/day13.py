@@ -181,4 +181,4 @@ for bus in busses:
             time += jump
         jump *= b
     i += 1
-print(f'part two: {time}')
+print(f'part two: {time} (solution by mdjaere)')
