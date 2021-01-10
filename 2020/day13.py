@@ -23,9 +23,10 @@ puzzle_input = '''1
 67,7,x,59,61'''
 ans_two = 1261476
 
-puzzle_input = '''1
-1789,37,47,1889'''
-ans_two = 1202161486
+# puzzle_input = '''1
+# 1789,37,47,1889'''
+# ans_two = 1202161486
+ans_two = False
 
 first_bus = int(puzzle_input.splitlines()[0].strip())
 busses = puzzle_input.splitlines()[1].strip().split(',')
@@ -147,7 +148,7 @@ if ans_two and ans_two == (chinese_remainder(list(bus_list.values()), list(bus_l
 
 
 '''
-# MDJaere's solution:
+https://github.com/mdjaere/adventofcode2020/tree/main/13/python
 
 import fileinput
 notes = [note.strip() for note in fileinput.input()]
