@@ -27,18 +27,21 @@ puzzle_input = '''1
 1789,37,47,1889'''
 ans_two = 1202161486
 
-
 first_bus = int(puzzle_input.splitlines()[0].strip())
 busses = puzzle_input.splitlines()[1].strip().split(',')
 
 i = 0
+ib = 0
 bus_list = {}
+bus_list_two = {}
 for bus in busses:
     if bus != 'x':
         if i == 0:
             i = int(bus)
         bus_list[int(bus)] = int(bus)-i 
+        bus_list_two[int(bus)] = ib
     i += 1
+    ib += 1
 
 def next_bus(i):
     # part one
@@ -130,6 +133,8 @@ def chinese_remainder(a: list, m: list):
 
     return (sum(calcs) % bigm)
 
+
+
 # part one
 print(f'part one: {next_bus(first_bus)}')
 
@@ -139,3 +144,38 @@ print(f'part two: {chinese_remainder(list(bus_list.values()), list(bus_list.keys
 # part two example verification
 if ans_two and ans_two == (chinese_remainder(list(bus_list.values()), list(bus_list.keys())) + offset):
     print(f'Answer correct ({ans_two})')
+
+
+'''
+# MDJaere's solution:
+
+import fileinput
+notes = [note.strip() for note in fileinput.input()]
+time = int(notes[0])
+busses = [{"id": int(route), "offset": int(offset)}
+          for offset, route in enumerate(notes[1].split(",")) if route != "x"]
+# Part 1
+first_bus = sorted([[bus["id"], bus["id"] - time % bus["id"]]
+                    for bus in busses], key=lambda x: x[1])[0]
+print("Part 1:", first_bus[0] * first_bus[1])
+# Part 2
+time = 1
+jump = 1
+for bus in busses:
+    while not (time + bus["offset"]) % bus["id"] == 0:
+        time += jump
+    jump *= bus["id"]
+print("Part 2:", time)
+'''
+
+time = 1
+jump = 1
+i = 0
+for bus in busses:
+    if bus != 'x':
+        b = int(bus)
+        while not (time + i) % b == 0:
+            time += jump
+        jump *= b
+    i += 1
+print(f'part two: {time}')
