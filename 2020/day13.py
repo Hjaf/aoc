@@ -7,25 +7,27 @@ ans_two         used to verify output.
 '''
 ans_two = False
 
-puzzle_input = '''939
-7,13,x,x,59,x,31,19''' 
-ans_two = 1068781
+puzzle_input = open('day13input.txt', 'r').read()
+# puzzle_input = '''939
+# 7,13,x,x,59,x,31,19''' 
+# ans_two = 1068781
 
-puzzle_input = '''1
-17,x,13,19'''
-ans_two = 3417
+# puzzle_input = '''1
+# 17,x,13,19'''
+# ans_two = 3417
 
-puzzle_input = '''1
-67,x,7,59,61'''
-ans_two = 779210
+# puzzle_input = '''1
+# 67,x,7,59,61'''
+# ans_two = 779210
 
-puzzle_input = '''1
-67,7,x,59,61'''
-ans_two = 1261476
+# puzzle_input = '''1
+# 67,7,x,59,61'''
+# ans_two = 1261476
 
 # puzzle_input = '''1
 # 1789,37,47,1889'''
 # ans_two = 1202161486
+
 ans_two = False
 
 first_bus = int(puzzle_input.splitlines()[0].strip())
