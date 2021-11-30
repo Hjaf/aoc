@@ -1,4 +1,4 @@
-instructions = open("day8input.txt", "r").read().split('\n')
+instructions = open("input/day8input.txt", "r").read().split('\n')
 i = 0 # final step id / no (string because i use a dictionary)
 b = 0 # the number of nop actions in action_list
 c = 0 # the number of jmp actions in action_list

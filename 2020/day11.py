@@ -1,4 +1,4 @@
-seatrows = list(open("day11input.txt", "r").read().split('\n'))
+seatrows = list(open("input/day11input.txt", "r").read().split('\n'))
 initial_seats = {} #true is taken
 
 #create seat dictionary

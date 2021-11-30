@@ -7,7 +7,7 @@ ans_two         used to verify output.
 '''
 ans_two = False
 
-puzzle_input = open('day13input.txt', 'r').read()
+puzzle_input = open('input/day13input.txt', 'r').read()
 # puzzle_input = '''939
 # 7,13,x,x,59,x,31,19''' 
 # ans_two = 1068781

@@ -1,4 +1,4 @@
-passwords = open('day2input.txt', 'r').readlines()
+passwords = open('input/day2input.txt', 'r').readlines()
 
 invalid_count = 0
 valid_count = 0

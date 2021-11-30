@@ -1,4 +1,4 @@
-adapter_list = list(open("day10input.txt", "r").read().split('\n'))
+adapter_list = list(open("input/day10input.txt", "r").read().split('\n'))
 adapter_count = len(adapter_list)
 adapters = []
 adapter_jolt_differences = []

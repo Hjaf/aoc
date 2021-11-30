@@ -1,4 +1,4 @@
-tilewalks = open('day24input.txt', 'r').readlines()
+tilewalks = open('input/day24input.txt', 'r').readlines()
 
 ##
 # Grid layout chosen for plot experiments.

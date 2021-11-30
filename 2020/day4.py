@@ -1,5 +1,5 @@
 import re
-passports = open('day4input.txt', 'r').read().split('\n\n')
+passports = open('input/day4input.txt', 'r').read().split('\n\n')
 
 required_fields = ['byr','iyr','eyr','hgt','hcl','ecl','pid']
 alternate_fields = ['cid']

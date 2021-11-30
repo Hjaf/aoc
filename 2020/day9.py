@@ -1,4 +1,4 @@
-stream = open("day9input.txt", "r").read().split('\n')
+stream = open("input/day9input.txt", "r").read().split('\n')
 vstream = []
 for s in stream:
     vstream.append(int(s))

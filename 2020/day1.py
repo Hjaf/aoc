@@ -1,4 +1,4 @@
-inumbers = open('day1input.txt','r').readlines()
+inumbers = open('input/day1input.txt','r').readlines()
 
 target_value = 2020
 expenses = []

@@ -1,4 +1,4 @@
-tickets = open('day5input.txt', 'r').readlines()
+tickets = open('input/day5input.txt', 'r').readlines()
 ticket_ids = {}
 
 def highest_ticket_id(tickets):

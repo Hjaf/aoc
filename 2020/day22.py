@@ -1,4 +1,4 @@
-decks = open('day22input.txt', 'r').readlines()
+decks = open('input/day22input.txt', 'r').readlines()
 p = 0
 player_one_deck = []
 player_two_deck = []

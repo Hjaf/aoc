@@ -2,7 +2,7 @@
 # I cheated on part2 because i failed. -1 stars for me :(
 #
 import re
-cargo = open("day7input.txt", "r").read().split('\n')
+cargo = open("input/day7input.txt", "r").read().split('\n')
 value_child = "shiny gold"
 baglist = {}# list() # list of all bags
 checklist = {}

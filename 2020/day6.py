@@ -1,4 +1,4 @@
-f = open("day6input.txt", "r")
+f = open("input/day6input.txt", "r")
 gans = f.read().split('\n\n')
 pyes = 0 # passenger yes
 gyes = 0 # gyes

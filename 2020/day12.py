@@ -1,5 +1,5 @@
 import math
-navigation = open('day12input.txt','r').readlines()
+navigation = open('input/day12input.txt','r').readlines()
 
 # Part one
 x = 0

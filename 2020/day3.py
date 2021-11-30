@@ -11,7 +11,7 @@ sample = '''..##.......
 #...##....#
 .#..#...#.#'''
 
-slope = open('day3input.txt', 'r').readlines()
+slope = open('input/day3input.txt', 'r').readlines()
 # slope = sample.splitlines()
 
 def path(x, y):
