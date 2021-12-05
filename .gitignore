@@ -2,3 +2,4 @@
 *.txt
 /*/input/
 /*/verbose/
+.vscode/settings.json
