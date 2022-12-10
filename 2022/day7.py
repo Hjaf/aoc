@@ -1,6 +1,6 @@
 input_data = open("./2022/input/day7input.txt").readlines()
 
-input_data = '''$ cd /
+input_data_test = '''$ cd /
 $ ls
 dir a
 14848514 b.txt
@@ -24,11 +24,6 @@ $ ls
 5626152 d.ext
 7214296 k
 '''.splitlines()
-
-#folder_content = []
-#folder_data_size = 0
-
-# current_path = []
 
 cwd = root = {}
 path = []
@@ -59,7 +54,7 @@ for row in input_data:
             cwd[name] = int(output)
 
 
-def part_one(dir = root, min_folder_size = 100_000):
+def part_one(dir=root, min_folder_size=100000):
     if type(dir) == int:
         return (dir, 0)
     size = 0
@@ -73,18 +68,13 @@ def part_one(dir = root, min_folder_size = 100_000):
     return (size, ans)
 
 
-print(f'''
-# part one: {part_one(root, 100_000)[1]}
-''')
-
-
-def calc_size(dir = root):
+def calc_size(dir=root):
     if type(dir) == int:
         return dir
     return sum(map(calc_size, dir.values()))
 
-t = calc_size() - 40_000_000
-def part_two(dir = root):
+
+def part_two(dir=root):
     ans = float("inf")
     if calc_size(dir) >= t:
         ans = calc_size(dir)
@@ -95,6 +85,9 @@ def part_two(dir = root):
         ans = min(ans, q)
     return ans
 
+
+t = calc_size() - 40000000
 print(f'''
+# part one: {part_one(root, 100000)[1]}
 # part two: {part_two()}
 ''')
