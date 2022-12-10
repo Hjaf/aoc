@@ -17,9 +17,10 @@ Puzzle input : {aoc_puzzle_input_url}
 
 
 def getAocInput(path):
-
+    # if len(os.environ.get("AOC_SECRET")) < 1:
+    #     os.environ["AOC_SECRET"] = "${{ secrets.AOC_SECRET}}"
     f = open(path, 'w')
-    aoc_headers = {'Cookie': f'session={os.environ.get("AOC_SECRET")}'}
+    aoc_headers = {'Cookie': f'session={"${{ secrets.AOC_SECRET}}"}'}
     response = requests.get(f'{aoc_puzzle_input_url}', headers=aoc_headers)
     f.write(response.text)
     f.close()
