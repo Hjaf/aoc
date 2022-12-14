@@ -1,46 +1,74 @@
-import os
-import requests
+import aoc
 import re
 
-aoc_year = 2022
-aoc_day = '11'
-aoc_puzzle_url = f'https://adventofcode.com/{aoc_year}/day/{aoc_day}'
-aoc_puzzle_input_url = f'{aoc_puzzle_url}/input'
-cwd = os.path.dirname(__file__)
-input_file_path = os.path.join(cwd, f'input/day{aoc_day}input.txt')
+puzzle_input = aoc.fetch_input(2022, 11)
 
-__doc__ = f'''
-Advent of code: day {aoc_day} {aoc_year}
-Puzzle Url   : {aoc_puzzle_url}
-Puzzle input : {aoc_puzzle_input_url}
+# Not solved independently
 
-Note:
-Will attempt getting the puzzle input from advent of code. 
-requires aoc_session value defined as github secret named "AOC_SECRET"
-'''
+monkeys = {}
 
 
-def getAocInput(path):
-    if os.environ.get("AOC_SECRET") is None:
-        print('environment missing, setting from github-secrets')
-        os.environ["AOC_SECRET"] = "${{ secrets.AOC_SECRET}}"
-    f = open(path, 'w')
-    aoc_headers = {'Cookie': f'session={os.environ.get("AOC_SECRET")}'}
-    response = requests.get(f'{aoc_puzzle_input_url}', headers=aoc_headers)
-    f.write(response.text)
-    f.close()
-    return response.text
+def refine():
+    monkeys.clear()
+    for monkey, data in enumerate(puzzle_input.split("\n\n")):
+        starting_items, operation, test, test_if_true, test_if_false = \
+            re.findall(": (.+)", data)
+        monkeys[monkey] = (
+            [int(item) for item in starting_items.split(", ")],
+            operation
+        ) + tuple(
+            int(v.split()[-1]) for v in (test, test_if_true, test_if_false)
+        )
 
 
-if os.path.exists(input_file_path):
-    input_data = open(input_file_path, 'r', encoding='utf-8').readlines()
-else:
-    print(
-        f'''
-No input data file was found for the {aoc_day}/{aoc_year} puzzle.
-Attempting to get the input data from {aoc_puzzle_input_url}
-Make sure you have set the "AOC_SECRET" environment variable.
-        '''
-    )
-    input_data = getAocInput(input_file_path)
+# Part one
 
+refine()
+
+stats = {monkey: 0 for monkey in monkeys}
+
+for i in range(20):
+    for monkey, (
+        items, operation, divisible_by, true_monkey, false_monkey
+    ) in monkeys.items():
+        stats[monkey] += len(items)
+        for old in items:
+            new = eval(operation.partition(" = ")[2])
+            new = int(new / 3)
+            target = true_monkey if (new % divisible_by) == 0 else false_monkey
+            monkeys[
+                true_monkey if (new % divisible_by) == 0 else false_monkey
+            ][0].append(new)
+        items.clear()
+result = 1
+
+for count in list(sorted(stats.values()))[-2:]:
+    result *= count
+print(result)
+
+# Part Two
+
+refine()
+
+monkey_product = 1
+for values in monkeys.values():
+    monkey_product *= values[2]
+stats = {monkey: 0 for monkey in monkeys}
+for i in range(10000):
+    for monkey, (
+        items, operation, divisible_by, true_monkey, false_monkey
+    ) in monkeys.items():
+        stats[monkey] += len(items)
+        for old in items:
+            new = eval(operation.partition(" = ")[2])
+            new = new % monkey_product
+            target = true_monkey if (new % divisible_by) == 0 else false_monkey
+            monkeys[
+                true_monkey if (new % divisible_by) == 0 else false_monkey
+            ][0].append(new)
+
+        items.clear()
+result = 1
+for count in list(sorted(stats.values()))[-2:]:
+    result *= count
+print(result)
