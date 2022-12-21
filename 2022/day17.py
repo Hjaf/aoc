@@ -18,6 +18,9 @@ answer_part_two = 0
 __doc__ = f'''
 Advent of code: day {aoc_day} {aoc_year}
 
+https://www.youtube.com/watch?v=w9Sk7lvyGZI
+https://github.com/hyper-neutrino/advent-of-code/blob/main/2022/day17p1.py
+https://github.com/hyper-neutrino/advent-of-code/blob/main/2022/day17p2.py
 '''
 data_input = [
     1 if x == ">" else -1 for x in aoc.fetch_input(aoc_year, aoc_day).strip()
