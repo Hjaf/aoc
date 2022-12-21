@@ -54,7 +54,7 @@ Not able to set the session secret required for getting
 the puzzle input! Make sure the environment variable
 'AOC_SECRET' is defined (securely) in this environment
 or github secret and try again.
-`exportAOC_SECRET="XXXXX"`
+`export AOC_SECRET="XXXXX"`
 The secret is the value of the session cookie for adventofcode.com
             ''')
             return '-'
