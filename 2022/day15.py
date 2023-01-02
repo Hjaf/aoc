@@ -58,11 +58,11 @@ def part_one(raw_data, Y=10):
 
 
 def part_two(raw_data, M):
-
+    multiplier = max(4_000_000, M)
     lines = [list(map(int, pattern.findall(line))) for line in raw_data]
     for Y in range(M + 1):
         if Y % 10000 == 0 and Y > 1:
-            print(f'{Y} of {M} (max)\r ', end='')
+            print(f'Row (y): {Y} of {M} rows (max)\r', end='')
         intervals = []
         for sx, sy, bx, by in lines:
 
@@ -86,7 +86,7 @@ def part_two(raw_data, M):
                 q.append([lo, hi])
                 continue
 
-            qlo, qhi = q[-1]
+            _, qhi = q[-1]
 
             if lo > qhi + 1:
                 q.append([lo, hi])
@@ -97,11 +97,13 @@ def part_two(raw_data, M):
         x = 0
         for lo, hi in q:
             if x < lo:
-                return x * 4_000_000 + Y
+                ans = (x * multiplier) + Y
+                print(f'x={x}, y={Y} not covered. Score/answer: {ans}') \
+                    if ans > 4_000_000 else None
             x = max(x, hi + 1)
             if x > M:
                 break
-    return q
+    return ans
 
 
 answer_part_one_test = part_one(input_data_test, 10)
@@ -111,14 +113,15 @@ answer_part_two_test = part_two(input_data_test, 20)
 answer_part_two = part_two(input_data, 4_000_000)
 
 
-print(f'''
-part one test:  {answer_part_one_test} (26)
-part one:       {answer_part_one}
+print(f'''\n
+Part one 
+Test            :    {answer_part_one_test} (26)
+Answer:         :    {answer_part_one}
 
-part two test   {answer_part_two_test} (56000011)
-part two:       {answer_part_two}
+Part two
+Test            :    {answer_part_two_test} (56000011)
+Answer          :    {answer_part_two}
 ''')
-
 
 assert answer_part_one_test == 26
 assert answer_part_two_test == 56000011

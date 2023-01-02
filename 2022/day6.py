@@ -1,4 +1,6 @@
-input_data = open("./input/day6input.txt").read()
+import aoc
+
+input_data = aoc.fetch_input(2022, 6)
 
 
 def find_unique_sequence(row, sequence_length):
@@ -7,6 +9,7 @@ def find_unique_sequence(row, sequence_length):
         if len(set(row[i - sequence_length:i])) == sequence_length:
             print(f'found unique set of length {sequence_length}: {row_set}')
             return i
+
 
 print(f'''
 part one: {find_unique_sequence(input_data, 4)}
