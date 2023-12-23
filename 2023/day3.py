@@ -19,7 +19,6 @@ Advent of code: day {aoc_day} {aoc_year}
 '''
 
 puzzle_data = aoc.fetch_input(aoc_year, aoc_day)
-
 puzzle_data_example_one = '''467..114..
 ...*......
 ..35..633.
